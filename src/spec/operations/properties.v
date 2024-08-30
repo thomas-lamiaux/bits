@@ -862,23 +862,23 @@ rewrite modnDmr. apply modn_sub.
 + apply expn_gt0. + apply toNatBounded. + done. + done.
 Qed.
 
-Lemma neqB_modn n (p q: BITS n) : p <> q <-> toNat p <> toNat q %[mod 2^n]. 
+Lemma neqB_modn n (p q: BITS n) : p <> q <-> toNat p <> toNat q %[mod 2^n].
 Proof. split => H. move => H'.
-rewrite (@modn_small (toNat p)) in H'.  
+rewrite (@modn_small (toNat p)) in H'.
 rewrite (@modn_small (toNat q)) in H'.
-apply toNat_inj in H'. by subst. apply toNatBounded. apply toNatBounded. 
-move => H'. by subst.  
-Qed. 
+apply toNat_inj in H'. by subst. apply toNatBounded. apply toNatBounded.
+move => H'. by subst.
+Qed.
 
 Lemma addBn_distinct n m : forall (p: BITS n), m.+1 < 2^n -> p <> p +#(m.+1).
-Proof. move => p LT. 
+Proof. move => p LT.
 rewrite neqB_modn.
 rewrite toNat_addB toNat_fromNat. rewrite (@modn_small (m.+1)) => //. rewrite modn_mod.
-move/eqP. rewrite -{1}(addn0 (toNat p)). 
-rewrite eqn_modDl. 
-rewrite modn_small; last by apply expn_gt0. 
-by rewrite modn_small; last by assumption. 
-Qed. 
+move/eqP. rewrite -{1}(addn0 (toNat p)).
+rewrite eqn_modDl.
+rewrite modn_small; last by apply expn_gt0.
+by rewrite modn_small; last by assumption.
+Qed.
 
 Corollary addBn_ne n m : forall (p: BITS n), m.+1 < 2^n -> p != p +#(m.+1).
 Proof. move => p LT. apply/eqP. by apply addBn_distinct. Qed.
@@ -1083,8 +1083,8 @@ Lemma leB0 n (p : BITS n) : leB #0 p.
 Proof. by rewrite leB_nat toNat_fromNat0. Qed.
 
 Lemma le0B n (p : BITS n) : leB p #0 -> p = #0.
-Proof. rewrite leB_nat. rewrite toNat_fromNat0 => H. rewrite leqn0 in H. 
-apply toNat_inj. by rewrite (eqP H) toNat_fromNat0. 
+Proof. rewrite leB_nat. rewrite toNat_fromNat0 => H. rewrite leqn0 in H.
+apply toNat_inj. by rewrite (eqP H) toNat_fromNat0.
 Qed.
 
 Lemma ltB_joinmsb0 n (p q : BITS n) : ltB (joinmsb0 p) (joinmsb0 q) = ltB p q.
@@ -1546,16 +1546,16 @@ Qed.
 
 
 Lemma shrB_fromNat n m : m < 2^n -> shrB (fromNat (n:=n) m) = fromNat (m./2).
-Proof. move => LT. apply toNat_inj. rewrite toNat_shrB. rewrite toNat_fromNatBounded => //. 
-rewrite toNat_fromNatBounded => //. rewrite -divn2. 
-eapply leq_ltn_trans. by apply leq_div. done. Qed. 
+Proof. move => LT. apply toNat_inj. rewrite toNat_shrB. rewrite toNat_fromNatBounded => //.
+rewrite toNat_fromNatBounded => //. rewrite -divn2.
+eapply leq_ltn_trans. by apply leq_div. done. Qed.
 
 Lemma shlB_fromNat n m : m < 2^n -> shlB (fromNat (n:=n.+1) m) = fromNat (m.*2).
-Proof. move => LT. apply toNat_inj. rewrite toNat_shlB. rewrite toNat_fromNatBounded => //. 
-rewrite toNat_fromNatBounded => //. 
-rewrite div.modn_small => //. by rewrite expnS mul2n ltn_double. 
-by rewrite expnS mul2n ltn_double. 
-rewrite expnS. apply (ltn_trans LT). apply ltn_Pmull => //. apply expn_gt0. Qed. 
+Proof. move => LT. apply toNat_inj. rewrite toNat_shlB. rewrite toNat_fromNatBounded => //.
+rewrite toNat_fromNatBounded => //.
+rewrite div.modn_small => //. by rewrite expnS mul2n ltn_double.
+by rewrite expnS mul2n ltn_double.
+rewrite expnS. apply (ltn_trans LT). apply ltn_Pmull => //. apply expn_gt0. Qed.
 
 Lemma getBit_shlB:
   forall n (bs: BITS n) k, k > 0 -> k < n ->
@@ -1676,10 +1676,6 @@ Proof.
     rewrite getBit_shlBn_false=> //.
     rewrite setBitThenGetDistinct=> //.
     rewrite getBit_zero=> //.
-    move=> Habs.
-    rewrite Habs in H=> //.
-    move=> Habs.
-    by rewrite Habs in H.
 Qed.
 
 Lemma shlBn_overflow:
@@ -2028,11 +2024,11 @@ Check (n%:R)%R.
 @GRing.natmul (BITS_zmodType (S ?n)) (GRing.one (BITSn_ringType ?n)) n
      : GRing.Zmodule.sort (BITS_zmodType (S ?n))
 where
-?n : [ |- nat] 
+?n : [ |- nat]
 *)
 
 Fail Check (q * n%:R)%R.
-(* 
+(*
 The term
  "@GRing.natmul (BITS_zmodType (S ?n)) (GRing.one (BITSn_ringType ?n)) n"
 has type "GRing.Zmodule.sort (BITS_zmodType (S ?n))"
